@@ -1,6 +1,6 @@
 {
   "name": "ml-regression-polynomial",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Polynomial Regression",
   "main": "lib/index.js",
   "module": "src/index.js",
