@@ -1,4 +1,4 @@
-import BaseRegression, {maybeToPrecision} from 'ml-regression-base';
+import BaseRegression, {checkArrayLength, maybeToPrecision} from 'ml-regression-base';
 import Matrix, {solve} from 'ml-matrix';
 
 export default class PolynomialRegression extends BaseRegression {
@@ -9,12 +9,8 @@ export default class PolynomialRegression extends BaseRegression {
             this.powers = y.powers;
             this.coefficients = y.coefficients;
         } else {
-            const n = x.length;
-            if (n !== y.length) {
-                throw new RangeError('input and output array have a different length');
-            }
-
-            regress(this, x, y, degree, n);
+            checkArrayLength(x, y);
+            regress(this, x, y, degree);
         }
     }
 
@@ -91,7 +87,8 @@ export default class PolynomialRegression extends BaseRegression {
     }
 }
 
-function regress(pr, x, y, degree, n) {
+function regress(pr, x, y, degree) {
+    const n = x.length;
     let powers;
     if (Array.isArray(degree)) {
         powers = degree;
