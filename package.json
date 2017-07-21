@@ -11,7 +11,7 @@
   "scripts": {
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
-    "prepublish": "rollup -c",
+    "prepublishOnly": "rollup -c",
     "test": "run-s testonly eslint",
     "testonly": "jest"
   },
