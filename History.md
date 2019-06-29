@@ -1,3 +1,17 @@
+# [2.0.0](https://github.com/mljs/regression-polynomial/compare/v1.0.3...v2.0.0) (2019-06-29)
+
+
+### chore
+
+* update dependencies and remove support for Node.js 6 ([7b44099](https://github.com/mljs/regression-polynomial/commit/7b44099))
+
+
+### BREAKING CHANGES
+
+* Node.js 6 is no longer supported.
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/mljs/regression-polynomial/compare/v1.0.2...v1.0.3) (2017-07-21)
 
