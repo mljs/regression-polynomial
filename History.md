@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/mljs/regression-polynomial/compare/v2.0.0...v2.1.0) (2020-02-04)
+
+
+### Features
+
+* works in typed array ([9617088](https://github.com/mljs/regression-polynomial/commit/961708871c015512921f4538ee6396727db2e8b7))
+
+
+
 # [2.0.0](https://github.com/mljs/regression-polynomial/compare/v1.0.3...v2.0.0) (2019-06-29)
 
 
