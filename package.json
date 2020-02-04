@@ -44,6 +44,6 @@
   },
   "dependencies": {
     "ml-matrix": "^6.4.1",
-    "ml-regression-base": "^2.1.0"
+    "ml-regression-base": "^2.1.1"
   }
 }
