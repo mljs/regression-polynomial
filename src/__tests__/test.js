@@ -18,7 +18,7 @@ describe('Polynomial regression', () => {
     expect(score.chi2).toBeLessThan(0.1);
     expect(score.rmsd).toBeCloseTo(0.12);
     expect(result.toString(4)).toBe(
-      'f(x) = 0.1785 * x^2 - 0.1925 * x + 0.8505'
+      'f(x) = 0.1785 * x^2 - 0.1925 * x + 0.8505',
     );
     expect(result.toLaTeX(2)).toBe('f(x) = 0.18x^{2} - 0.19x + 0.85');
   });
@@ -40,7 +40,7 @@ describe('Polynomial regression', () => {
       2.8,
       3.3,
       3.5,
-      3.0
+      3.0,
     ];
     const degree = 5;
     const regression = new PolynomialRegression(x, y, degree);
@@ -51,10 +51,10 @@ describe('Polynomial regression', () => {
       -0.0019874818431079486,
       0.0001367602062643227,
       -0.000001302280135149651,
-      3.837755337564968e-9
+      3.837755337564968e-9,
     ]);
     expect(regression.toString(3)).toBe(
-      'f(x) = 3.84e-9 * x^5 - 0.00000130 * x^4 + 0.000137 * x^3 - 0.00199 * x^2 - 0.392 * x + 17.4'
+      'f(x) = 3.84e-9 * x^5 - 0.00000130 * x^4 + 0.000137 * x^3 - 0.00199 * x^2 - 0.392 * x + 17.4',
     );
   });
 
@@ -63,7 +63,7 @@ describe('Polynomial regression', () => {
       name: 'polynomialRegression',
       degree: 1,
       powers: [1],
-      coefficients: [-1]
+      coefficients: [-1],
     });
 
     expect(regression.predict(1)).toBe(-1);
@@ -73,7 +73,7 @@ describe('Polynomial regression', () => {
       name: 'polynomialRegression',
       degree: 1,
       powers: [1],
-      coefficients: [-1]
+      coefficients: [-1],
     });
   });
 });
