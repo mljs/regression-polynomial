@@ -61,11 +61,13 @@ export default class PolynomialRegression extends BaseRegression {
           str = maybeToPrecision(this.coefficients[k], precision);
         } else {
           if (this.powers[k] === 1) {
-            str = `${maybeToPrecision(this.coefficients[k], precision) +
-              times}x`;
+            str = `${
+              maybeToPrecision(this.coefficients[k], precision) + times
+            }x`;
           } else {
-            str = `${maybeToPrecision(this.coefficients[k], precision) +
-              times}x${sup}${this.powers[k]}${closeSup}`;
+            str = `${
+              maybeToPrecision(this.coefficients[k], precision) + times
+            }x${sup}${this.powers[k]}${closeSup}`;
           }
         }
 

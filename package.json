@@ -13,7 +13,9 @@
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "prepack": "npm run compile",
-    "test": "npm run test-coverage && npm run eslint",
+    "prettier": "prettier --check src",
+    "prettier-write": "prettier --write src",
+    "test": "npm run test-coverage && npm run eslint && npm run prettier",
     "test-only": "jest",
     "test-coverage": "jest --coverage"
   },
