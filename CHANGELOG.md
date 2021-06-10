@@ -1,3 +1,5 @@
+# Changelog
+
 ## [2.2.0](https://github.com/mljs/regression-polynomial/compare/v2.1.0...v2.2.0) (2021-06-10)
 
 
