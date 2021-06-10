@@ -1,8 +1,8 @@
+import { Matrix, MatrixTransposeView, solve } from 'ml-matrix';
 import BaseRegression, {
   checkArrayLength,
   maybeToPrecision,
 } from 'ml-regression-base';
-import { Matrix, MatrixTransposeView, solve } from 'ml-matrix';
 
 export default class PolynomialRegression extends BaseRegression {
   constructor(x, y, degree) {
