@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/mljs/regression-polynomial/compare/v2.1.0...v2.2.0) (2021-06-10)
+
+
+### Features
+
+* update dependencies ([7ad3f53](https://github.com/mljs/regression-polynomial/commit/7ad3f53721ca5d88fc23430aaf377d2a73a9893a))
+
 # [2.1.0](https://github.com/mljs/regression-polynomial/compare/v2.0.0...v2.1.0) (2020-02-04)
 
 
