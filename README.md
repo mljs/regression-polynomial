@@ -2,6 +2,8 @@
 
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
+[![build status][ci-image]][ci-url]
+[![Test coverage][codecov-image]][codecov-url]
 
 Polynomial Regression.
 
@@ -12,7 +14,7 @@ Polynomial Regression.
 ## Usage
 
 ```js
-import PolynomialRegression from 'ml-regression-polynomial';
+import { PolynomialRegression } from 'ml-regression-polynomial';
 
 const x = [50, 50, 50, 70, 70, 70, 80, 80, 80, 90, 90, 90, 100, 100, 100];
 const y = [3.3, 2.8, 2.9, 2.3, 2.6, 2.1, 2.5, 2.9, 2.4, 3.0, 3.1, 2.8, 3.3, 3.5, 3.0];
@@ -35,3 +37,7 @@ console.log(regression.score(x, y));
 [npm-url]: https://npmjs.org/package/ml-regression-polynomial
 [download-image]: https://img.shields.io/npm/dm/ml-regression-polynomial.svg?style=flat-square
 [download-url]: https://npmjs.org/package/ml-regression-polynomial
+[codecov-image]: https://img.shields.io/codecov/c/github/mljs/regression-polynomial.svg
+[codecov-url]: https://codecov.io/gh/mljs/regression-polynomial
+[ci-image]: https://github.com/mljs/regression-polynomial/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-url]: https://github.com/mljs/regression-polynomial/actions?query=workflow%3A%22Node.js+CI%22
