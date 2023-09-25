@@ -4,8 +4,8 @@ import BaseRegression, {
   maybeToPrecision,
 } from 'ml-regression-base';
 
-export default class PolynomialRegression extends BaseRegression {
-  constructor(x, y, degree) {
+export class PolynomialRegression extends BaseRegression {
+  constructor(x, y, degree, options = {}) {
     super();
     if (x === true) {
       this.degree = y.degree;
@@ -13,7 +13,10 @@ export default class PolynomialRegression extends BaseRegression {
       this.coefficients = y.coefficients;
     } else {
       checkArrayLength(x, y);
-      regress(this, x, y, degree);
+      const result = regress(x, y, degree, options);
+      this.degree = result.degree;
+      this.powers = result.powers;
+      this.coefficients = result.coefficients;
     }
   }
 
@@ -59,16 +62,12 @@ export default class PolynomialRegression extends BaseRegression {
       if (this.coefficients[k] !== 0) {
         if (this.powers[k] === 0) {
           str = maybeToPrecision(this.coefficients[k], precision);
+        } else if (this.powers[k] === 1) {
+          str = `${maybeToPrecision(this.coefficients[k], precision) + times}x`;
         } else {
-          if (this.powers[k] === 1) {
-            str = `${
-              maybeToPrecision(this.coefficients[k], precision) + times
-            }x`;
-          } else {
-            str = `${
-              maybeToPrecision(this.coefficients[k], precision) + times
-            }x${sup}${this.powers[k]}${closeSup}`;
-          }
+          str = `${
+            maybeToPrecision(this.coefficients[k], precision) + times
+          }x${sup}${this.powers[k]}${closeSup}`;
         }
 
         if (this.coefficients[k] > 0 && k !== this.coefficients.length - 1) {
@@ -94,22 +93,28 @@ export default class PolynomialRegression extends BaseRegression {
   }
 }
 
-function regress(pr, x, y, degree) {
+function regress(x, y, degree, options) {
   const n = x.length;
+  let { interceptAtZero = false } = options;
   let powers;
   if (Array.isArray(degree)) {
     powers = degree;
-    degree = powers.length;
-  } else {
-    degree++;
+    interceptAtZero = false; //must be false in this case
+  } else if (interceptAtZero) {
     powers = new Array(degree);
     for (let k = 0; k < degree; k++) {
+      powers[k] = k + 1;
+    }
+  } else {
+    powers = new Array(degree + 1);
+    for (let k = 0; k <= degree; k++) {
       powers[k] = k;
     }
   }
-  const F = new Matrix(n, degree);
+  const nCoefficients = powers.length; //1 per power, in any case.
+  const F = new Matrix(n, nCoefficients);
   const Y = new Matrix([y]);
-  for (let k = 0; k < degree; k++) {
+  for (let k = 0; k < nCoefficients; k++) {
     for (let i = 0; i < n; i++) {
       if (powers[k] === 0) {
         F.set(i, k, 1);
@@ -123,7 +128,9 @@ function regress(pr, x, y, degree) {
   const A = FT.mmul(F);
   const B = FT.mmul(new MatrixTransposeView(Y));
 
-  pr.degree = degree - 1;
-  pr.powers = powers;
-  pr.coefficients = solve(A, B).to1DArray();
+  return {
+    coefficients: solve(A, B).to1DArray(),
+    degree: Math.max(...powers),
+    powers,
+  };
 }
