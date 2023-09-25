@@ -4,7 +4,7 @@ import BaseRegression, {
   maybeToPrecision,
 } from 'ml-regression-base';
 
-export default class PolynomialRegression extends BaseRegression {
+export class PolynomialRegression extends BaseRegression {
   constructor(x, y, degree, options = {}) {
     super();
     if (x === true) {

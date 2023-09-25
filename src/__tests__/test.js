@@ -1,6 +1,6 @@
 import { expect, describe, it } from '@jest/globals';
 
-import PolynomialRegression from '..';
+import { PolynomialRegression } from '..';
 
 function assertCoefficientsAndPowers(result, expectedCs, expectedPowers) {
   let i = 0;
