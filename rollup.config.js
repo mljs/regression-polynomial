@@ -4,4 +4,5 @@ export default {
     file: 'lib/index.js',
     format: 'cjs',
   },
+  external: ['ml-regression-base', 'ml-matrix'],
 };
