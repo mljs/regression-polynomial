@@ -17,7 +17,9 @@ Polynomial Regression.
 import { PolynomialRegression } from 'ml-regression-polynomial';
 
 const x = [50, 50, 50, 70, 70, 70, 80, 80, 80, 90, 90, 90, 100, 100, 100];
-const y = [3.3, 2.8, 2.9, 2.3, 2.6, 2.1, 2.5, 2.9, 2.4, 3.0, 3.1, 2.8, 3.3, 3.5, 3.0];
+const y = [
+  3.3, 2.8, 2.9, 2.3, 2.6, 2.1, 2.5, 2.9, 2.4, 3.0, 3.1, 2.8, 3.3, 3.5, 3.0,
+];
 const degree = 5; // setup the maximum degree of the polynomial
 
 const regression = new PolynomialRegression(x, y, degree);
@@ -28,6 +30,29 @@ console.log(regression.toString(3)); // Prints a human-readable version of the f
 console.log(regression.toLaTeX());
 console.log(regression.score(x, y));
 ```
+
+## Options
+
+An `interceptAtZero` option is available, to force $f(0) = 0$. Also, a "powers array" can be specified.
+
+- Using `interceptAtZero`
+
+```js
+const regression = new PolynomialRegression(x, y, degree, {
+  interceptAtZero: true,
+});
+```
+
+- Using the powers array
+
+```js
+const powers = [0, 1, 2, 3, 4, 5];
+const regression = new PolynomialRegression(x, y, powers);
+```
+
+`powers` could also be `[1,2,3,4,5]`or`[1,3,5]` and so on.
+
+For intercepting at zero using an array, skip the zero in the array (the option `interceptAtZero` is ignored in this case.)
 
 ## License
 
