@@ -40,12 +40,13 @@
     "eslint-config-cheminfo-typescript": "^12.0.4",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.5"
   },
   "dependencies": {
+    "cheminfo-types": "^1.7.2",
     "ml-matrix": "^6.10.5",
-    "ml-regression-base": "^3.0.0",
-    "vitest": "^0.34.5"
+    "ml-regression-base": "^3.0.0"
   },
   "types": "./lib/index.d.ts"
 }
