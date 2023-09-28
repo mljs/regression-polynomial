@@ -1,17 +1,24 @@
-import PolynomialRegression from '..';
+import { expect, describe, it } from '@jest/globals';
+
+import { PolynomialRegression } from '..';
+
+function assertCoefficientsAndPowers(result, expectedCs, expectedPowers) {
+  let i = 0;
+  for (i; i < expectedCs.length; ++i) {
+    expect(result.coefficients[i]).toBeCloseTo(expectedCs[i], 10e-6);
+    expect(result.powers).toStrictEqual(expectedPowers);
+  }
+  expect(result.degree).toBe(Math.max(...expectedPowers));
+}
 
 describe('Polynomial regression', () => {
   it('degree 2', () => {
     const x = [-3, 0, 2, 4];
     const y = [3, 1, 1, 3];
     const result = new PolynomialRegression(x, y, 2);
-
     const expected = [0.850519, -0.192495, 0.178462];
 
-    for (let i = 0; i < expected.length; ++i) {
-      expect(result.coefficients[i]).toBeCloseTo(expected[i], 10e-6);
-      expect(result.powers[i]).toBe(i);
-    }
+    assertCoefficientsAndPowers(result, expected, [0, 1, 2]);
 
     const score = result.score(x, y);
     expect(score.r2).toBeGreaterThan(0.8);
@@ -30,10 +37,7 @@ describe('Polynomial regression', () => {
 
     const expected = [0.850519, -0.192495, 0.178462];
 
-    for (let i = 0; i < expected.length; ++i) {
-      expect(result.coefficients[i]).toBeCloseTo(expected[i], 10e-6);
-      expect(result.powers[i]).toBe(i);
-    }
+    assertCoefficientsAndPowers(result, expected, [0, 1, 2]);
 
     const score = result.score(x, y);
     expect(score.r2).toBeGreaterThan(0.8);
@@ -79,5 +83,26 @@ describe('Polynomial regression', () => {
       powers: [1],
       coefficients: [-1],
     });
+  });
+  it('Fit a parabola with origin on 0', () => {
+    const x = new Float64Array([-4, 4, 2, 3, 1, 8, 5, 7]);
+    const y = new Float64Array([16.5, 16.5, 4.5, 9.5, 1.5, 64.5, 25.5, 49.5]);
+    const result = new PolynomialRegression(x, y, 2, { interceptAtZero: true });
+    const solution = [0.018041553971009705, 1.0095279075485593];
+    assertCoefficientsAndPowers(result, solution, [1, 2]);
+  });
+  it('Fit a parabola with origin on 0, using degree array', () => {
+    const x = new Float64Array([-4, 4, 2, 3, 1, 8, 5, 7]);
+    const y = new Float64Array([16.5, 16.5, 4.5, 9.5, 1.5, 64.5, 25.5, 49.5]);
+    const result = new PolynomialRegression(x, y, [1, 2]);
+    const solution = [0.018041553971009705, 1.0095279075485593];
+    assertCoefficientsAndPowers(result, solution, [1, 2]);
+  });
+  it('Fit a parabola inverting the degree array terms', () => {
+    const x = new Float64Array([-4, 4, 2, 3, 1, 8, 5, 7]);
+    const y = new Float64Array([16.5, 16.5, 4.5, 9.5, 1.5, 64.5, 25.5, 49.5]);
+    const result = new PolynomialRegression(x, y, [2, 1]);
+    const solution = [1.0095279075485593, 0.018041553971009705];
+    assertCoefficientsAndPowers(result, solution, [2, 1]);
   });
 });
