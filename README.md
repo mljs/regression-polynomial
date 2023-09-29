@@ -64,5 +64,5 @@ For intercepting at zero using an array, skip the zero in the array (the option 
 [download-url]: https://npmjs.org/package/ml-regression-polynomial
 [codecov-image]: https://img.shields.io/codecov/c/github/mljs/regression-polynomial.svg
 [codecov-url]: https://codecov.io/gh/mljs/regression-polynomial
-[ci-image]: https://github.com/mljs/regression-polynomial/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-image]: https://github.com/mljs/regression-polynomial/workflows/Node.js%20CI/badge.svg?branch=main
 [ci-url]: https://github.com/mljs/regression-polynomial/actions?query=workflow%3A%22Node.js+CI%22
