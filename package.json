@@ -2,6 +2,7 @@
   "name": "ml-regression-polynomial",
   "version": "2.2.0",
   "description": "Polynomial Regression",
+  "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
   "files": [
@@ -47,6 +48,5 @@
     "cheminfo-types": "^1.7.2",
     "ml-matrix": "^6.10.5",
     "ml-regression-base": "^3.0.0"
-  },
-  "types": "./lib/index.d.ts"
+  }
 }
