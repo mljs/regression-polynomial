@@ -3,6 +3,5 @@
   "semi": true,
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "all",
-  "filepath": "src/**/*.{js,jsx,ts,tsx}"
+  "trailingComma": "all"
 }
