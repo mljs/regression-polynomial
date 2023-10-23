@@ -185,17 +185,13 @@ function regress(
   const qrF = new QrDecomposition(F);
 
   if (qrF.isFullRank()) {
-    // less error, similar execution time
-    const Qt = qrF.orthogonalMatrix.transpose();
-    const Rt = qrF.upperTriangularMatrix.transpose();
-    const RtR = Rt.mmul(qrF.upperTriangularMatrix);
-    const RtQtY = Rt.mmul(Qt).mmul(Y);
-    result.coefficients = solve(RtR, RtQtY).to1DArray();
+    result.coefficients = qrF.solve(Y).to1DArray();
   } else {
+    // it seems this will only run when singular matrix
     const Ft = new MatrixTransposeView(F);
     const XtX = Ft.mmul(F);
     const XtY = Ft.mmul(Y);
-    result.coefficients = solve(XtX, XtY).to1DArray();
+    result.coefficients = solve(XtX, XtY, true).to1DArray();
   }
   return result as RegressOutput;
 }

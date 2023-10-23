@@ -16,9 +16,7 @@ const data = x.map((x, i) => ({ x, y: y[i] }));
 const calculations: SeriesPoint[][] = [];
 const degree: number[] = [];
 for (let i = 2; i <= 7; i++) {
-  const r = new PolynomialRegression(x, y, i)
-    if(i===5) console.log(r.coefficients, r.toLaTeX(5))
-    
+  const r = new PolynomialRegression(x, y, i);
   const plot = r.predict(x).map((y, i) => ({ x: x[i], y }));
   degree.push(r.degree);
   calculations.push(plot);

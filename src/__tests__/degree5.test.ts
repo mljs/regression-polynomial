@@ -3,16 +3,19 @@ import { it, expect } from 'vitest';
 import { PolynomialRegression } from '../index';
 
 import { x, y } from './data/degree5.data';
+import { assertCoefficientsAndPowers } from './util';
 
 it('degree 5', () => {
   const degree = 5;
   const regression = new PolynomialRegression(x, y, degree);
-  expect(regression.predict(80)).toBeCloseTo(2.6, 1e-6);
-  expect(regression.coefficients).toStrictEqual([
-    20.156354944800594, -0.5790895471877099, 0.003018168825360046,
-    0.00007091656373377214, -8.750085815002295e-7, 2.742187260331602e-9,
-  ]);
+  expect(regression.predict(80)).toBeCloseTo(2.5625, 5);
+  const expectedCs = [
+    41451141727940.75, -2814400932400.3633, 75154867680.51097,
+    -988576832.4793786, 6415057.648368356, -16448.865765046798,
+  ];
+  const expectedPowers = [0, 1, 2, 3, 4, 5];
+  assertCoefficientsAndPowers(regression, expectedCs, expectedPowers);
   expect(regression.toLaTeX(5)).toBe(
-    'f(x) = 2.7422e-9x^{5} - 8.7501e-7x^{4} + 0.000070917x^{3} + 0.0030182x^{2} - 0.57909x + 20.156',
+    'f(x) = - 16449x^{5} + 6.4151e+6x^{4} - 9.8858e+8x^{3} + 7.5155e+10x^{2} - 2.8144e+12x + 4.1451e+13',
   );
 });

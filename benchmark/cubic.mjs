@@ -31,4 +31,4 @@ const data = JSON.parse(
  */
 const result = new PolynomialRegression(data.x, data.y, 3);
 
-// console.log(result.toLaTeX(5));
+console.log(result.coefficients);

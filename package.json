@@ -11,10 +11,10 @@
     "lib-esm"
   ],
   "scripts": {
-    "benchmark": "node --cpu-prof ./benchmark/cubic.mjs",
+    "benchmark": "npm run tsc && node --cpu-prof ./benchmark/cubic.mjs",
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
-    "demo": "vite demo --open --base .",
+    "demo": "vite demo --open --base ./",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "prepack": "npm run tsc",

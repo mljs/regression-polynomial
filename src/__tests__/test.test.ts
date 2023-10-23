@@ -1,19 +1,8 @@
-import { NumberArray } from 'cheminfo-types';
 import { expect, it, describe } from 'vitest';
 
 import { PolynomialRegression } from '..';
 
-function assertCoefficientsAndPowers(
-  result: PolynomialRegression,
-  expectedCs: NumberArray,
-  expectedPowers: NumberArray,
-) {
-  for (let i = 0; i < expectedCs.length; ++i) {
-    expect(result.coefficients[i]).toBeCloseTo(expectedCs[i], 10e-6);
-    expect(result.powers).toStrictEqual(expectedPowers);
-  }
-  expect(result.degree).toBe(Math.max(...expectedPowers));
-}
+import { assertCoefficientsAndPowers } from './util';
 
 describe('Polynomial regression', () => {
   it('degree 2', () => {
@@ -98,5 +87,11 @@ describe('Polynomial regression', () => {
     });
     const solution = [0.018041553971009705, 1.0095279075485593];
     assertCoefficientsAndPowers(result, solution, [1, 2]);
+  });
+  it('singular matrix', () => {
+    const x = new Float64Array([1, 1, 1]);
+    const y = new Float64Array([1, 2, 3]);
+    const result = new PolynomialRegression(x, y, 3);
+    assertCoefficientsAndPowers(result, [0.5, 0.5, 0.5, 0.5], [0, 1, 2, 3]);
   });
 });
