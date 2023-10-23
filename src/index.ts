@@ -1,5 +1,5 @@
 import { type NumberArray } from 'cheminfo-types';
-import { Matrix, MatrixTransposeView, solve } from 'ml-matrix';
+import { Matrix, MatrixTransposeView, QrDecomposition, solve } from 'ml-matrix';
 import BaseRegression, {
   checkArrayLength,
   maybeToPrecision,
@@ -15,13 +15,17 @@ export class PolynomialRegression extends BaseRegression {
   /**
    * @param x - independent or explanatory variable
    * @param y - dependent or response variable
-   * @param degree - degree of the polynomial regression, or array of powers to be used. When degree is an array, intercept at zero is forced to false/ignored.
-   * @example `new PolynomialRegression(x, y, 2)`, in this case, you can pass the option `interceptAtZero`, if you need it.
-   * @example `new PolynomialRegression(x, y, [1, 3, 5])`
-   * Each of the degrees corresponds to a column, so if you have them switched, just do:
-   * @example `new PolynomialRegression(x, y, [3, 1, 5])`
+   * @param degree - degree of the polynomial, or array of powers to be used. When degree is an array, intercept at zero is forced to false / ignored.
+   * @example
+   ```js
+   new PolynomialRegression(x, y, 2, {interceptAtZero: true})
+   new PolynomialRegression(x, y, 2) // same as using false instead
+   new PolynomialRegression(x, y, [1, 3, 5])
+   new PolynomialRegression(x, y, [3, 1, 5])
+   ```
    *
    * @param options.interceptAtZero - force the polynomial regression so that f(0) = 0
+   * @default false
    */
   constructor(
     x: NumberArray,
@@ -123,12 +127,18 @@ export class PolynomialRegression extends BaseRegression {
 
 /**
  * Perform a polynomial regression on the given data set.
- * This is an internal function.
+ * @internal
+ * This isn't a class method.
  * @param x - independent or explanatory variable
  * @param y - dependent or response variable
  * @param degree - degree of the polynomial regression
  * @param options.interceptAtZero - force the polynomial regression so that $f(0) = 0$
  */
+interface RegressOutput {
+  degree: number;
+  powers: number[];
+  coefficients: number[];
+}
 function regress(
   x: NumberArray,
   y: NumberArray,
@@ -156,7 +166,7 @@ function regress(
   }
   const nCoefficients = powers.length; //1 per power, in any case.
   const F = new Matrix(n, nCoefficients);
-  const Y = new Matrix([y]);
+  const Y = Matrix.columnVector(y);
   for (let k = 0; k < nCoefficients; k++) {
     for (let i = 0; i < n; i++) {
       if (powers[k] === 0) {
@@ -167,13 +177,21 @@ function regress(
     }
   }
 
-  const FT = new MatrixTransposeView(F);
-  const A = FT.mmul(F);
-  const B = FT.mmul(new MatrixTransposeView(Y));
-
-  return {
-    coefficients: solve(A, B).to1DArray(),
+  const result: Partial<RegressOutput> = {
     degree: Math.max(...powers),
     powers,
   };
+
+  const qrF = new QrDecomposition(F);
+
+  if (qrF.isFullRank()) {
+    result.coefficients = qrF.solve(Y).to1DArray();
+  } else {
+    // runs if A is a singular matrix, quite rare imho.
+    const Ft = new MatrixTransposeView(F);
+    const XtX = Ft.mmul(F);
+    const XtY = Ft.mmul(Y);
+    result.coefficients = solve(XtX, XtY, true).to1DArray();
+  }
+  return result as RegressOutput;
 }

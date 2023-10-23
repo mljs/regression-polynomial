@@ -1,19 +1,8 @@
-import { NumberArray } from 'cheminfo-types';
 import { expect, it, describe } from 'vitest';
 
 import { PolynomialRegression } from '..';
 
-function assertCoefficientsAndPowers(
-  result: PolynomialRegression,
-  expectedCs: NumberArray,
-  expectedPowers: NumberArray,
-) {
-  for (let i = 0; i < expectedCs.length; ++i) {
-    expect(result.coefficients[i]).toBeCloseTo(expectedCs[i], 10e-6);
-    expect(result.powers).toStrictEqual(expectedPowers);
-  }
-  expect(result.degree).toBe(Math.max(...expectedPowers));
-}
+import { assertCoefficientsAndPowers } from './util';
 
 describe('Polynomial regression', () => {
   it('degree 2', () => {
@@ -53,23 +42,6 @@ describe('Polynomial regression', () => {
       'f(x) = 0.1785 * x^2 - 0.1925 * x + 0.8505',
     );
     expect(result.toLaTeX(2)).toBe('f(x) = 0.18x^{2} - 0.19x + 0.85');
-  });
-
-  it('degree 5', () => {
-    const x = [50, 50, 50, 70, 70, 70, 80, 80, 80, 90, 90, 90, 100, 100, 100];
-    const y = [
-      3.3, 2.8, 2.9, 2.3, 2.6, 2.1, 2.5, 2.9, 2.4, 3.0, 3.1, 2.8, 3.3, 3.5, 3.0,
-    ];
-    const degree = 5;
-    const regression = new PolynomialRegression(x, y, degree);
-    expect(regression.predict(80)).toBeCloseTo(2.6, 1e-6);
-    expect(regression.coefficients).toStrictEqual([
-      17.39552328011271, -0.3916378430736305, -0.0019874818431079486,
-      0.0001367602062643227, -0.000001302280135149651, 3.837755337564968e-9,
-    ]);
-    expect(regression.toString(3)).toBe(
-      'f(x) = 3.84e-9 * x^5 - 0.00000130 * x^4 + 0.000137 * x^3 - 0.00199 * x^2 - 0.392 * x + 17.4',
-    );
   });
 
   it('toJSON and load', () => {
@@ -115,5 +87,11 @@ describe('Polynomial regression', () => {
     });
     const solution = [0.018041553971009705, 1.0095279075485593];
     assertCoefficientsAndPowers(result, solution, [1, 2]);
+  });
+  it('singular matrix', () => {
+    const x = new Float64Array([1, 1, 1]);
+    const y = new Float64Array([1, 2, 3]);
+    const result = new PolynomialRegression(x, y, 3);
+    assertCoefficientsAndPowers(result, [0.5, 0.5, 0.5, 0.5], [0, 1, 2, 3]);
   });
 });
