@@ -9,7 +9,7 @@ import {
   SeriesPoint,
 } from 'react-plot';
 
-import { x, y } from '../src/__tests__/data/degree5.data';
+import { x, y } from '../src/__tests__/data/tricky.data';
 
 const data = x.map((x, i) => ({ x, y: y[i] }));
 

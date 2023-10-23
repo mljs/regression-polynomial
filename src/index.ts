@@ -187,7 +187,7 @@ function regress(
   if (qrF.isFullRank()) {
     result.coefficients = qrF.solve(Y).to1DArray();
   } else {
-    // it seems this will only run when singular matrix
+    // runs if A is a singular matrix, quite rare imho.
     const Ft = new MatrixTransposeView(F);
     const XtX = Ft.mmul(F);
     const XtY = Ft.mmul(Y);

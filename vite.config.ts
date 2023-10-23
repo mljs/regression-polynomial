@@ -4,8 +4,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   test: {
-    include: ['**/*.{test,spec}.ts'],
-    globals: true,
+    include: ['**/*.{test,spec}.ts']
   },
 
   plugins: [react()],
