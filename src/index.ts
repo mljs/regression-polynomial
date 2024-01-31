@@ -50,7 +50,7 @@ export class PolynomialRegression extends BaseRegression {
   _predict(x: number) {
     let y = 0;
     for (let k = 0; k < this.powers.length; k++) {
-      y += this.coefficients[k] * Math.pow(x, this.powers[k]);
+      y += this.coefficients[k] * x ** this.powers[k];
     }
     return y;
   }
@@ -162,7 +162,7 @@ function regress(
       if (powers[k] === 0) {
         F.set(i, k, 1);
       } else {
-        F.set(i, k, Math.pow(x[i], powers[k]));
+        F.set(i, k, x[i] ** powers[k]);
       }
     }
   }
