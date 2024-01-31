@@ -39,6 +39,7 @@
     "@vitest/coverage-v8": "^1.2.2",
     "eslint": "^8.56.0",
     "eslint-config-cheminfo-typescript": "^12.1.0",
+    "ml-spectra-processing": "^12.10.1",
     "prettier": "^3.2.4",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3",

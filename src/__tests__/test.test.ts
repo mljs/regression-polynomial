@@ -1,4 +1,5 @@
 import { NumberArray } from 'cheminfo-types';
+import { createRandomArray, xSum } from 'ml-spectra-processing';
 import { expect, it, describe } from 'vitest';
 
 import { PolynomialRegression } from '..';
@@ -16,6 +17,19 @@ function assertCoefficientsAndPowers(
 }
 
 describe('Polynomial regression', () => {
+  it('basic linear test', () => {
+    const size = 1000;
+    const x = new Array(size).fill(0).map((_, i) => i);
+    const y = new Array(size).fill(1);
+    const regression = new PolynomialRegression(x, y, 1, {
+      interceptAtZero: false,
+    });
+    let difference = 0;
+    for (let i = 0; i < size; i++) {
+      difference += Math.abs(regression.predict(x[i]) - y[i]);
+    }
+    expect(difference).closeTo(0, 1e-6);
+  });
   it('degree 2', () => {
     const x = [-3, 0, 2, 4];
     const y = [3, 1, 1, 3];
@@ -115,5 +129,27 @@ describe('Polynomial regression', () => {
     });
     const solution = [0.018041553971009705, 1.0095279075485593];
     assertCoefficientsAndPowers(result, solution, [1, 2]);
+  });
+
+  it('white noise regression', () => {
+    const size = 1000000;
+    const x = new Array(size).fill(0).map((_, i) => i);
+    const y = Array.from(
+      createRandomArray({
+        seed: 0,
+        mean: 0,
+        distribution: 'normal',
+        length: size,
+      }),
+    );
+    const regression = new PolynomialRegression(x, y, 1, {
+      interceptAtZero: false,
+    });
+    const newY = [];
+    for (let i = 0; i < size; i++) {
+      newY.push(y[i] - regression.predict(x[i]));
+    }
+    const newSumY = xSum(newY);
+    expect(newSumY).toBeCloseTo(0, 1e-6);
   });
 });
