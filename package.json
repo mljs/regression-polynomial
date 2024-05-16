@@ -36,18 +36,18 @@
   },
   "homepage": "https://github.com/mljs/regression-polynomial#readme",
   "devDependencies": {
-    "@vitest/coverage-v8": "^1.2.2",
+    "@vitest/coverage-v8": "^1.6.0",
     "eslint": "^8.56.0",
-    "eslint-config-cheminfo-typescript": "^12.1.0",
-    "ml-spectra-processing": "^12.10.1",
-    "prettier": "^3.2.4",
-    "rimraf": "^5.0.5",
-    "typescript": "^5.3.3",
-    "vitest": "^1.2.2"
+    "eslint-config-cheminfo-typescript": "^12.4.0",
+    "ml-spectra-processing": "^14.5.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "dependencies": {
-    "cheminfo-types": "^1.7.2",
+    "cheminfo-types": "^1.7.3",
     "ml-matrix": "^6.11.0",
-    "ml-regression-base": "^3.0.0"
+    "ml-regression-base": "^4.0.0"
   }
 }

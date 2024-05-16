@@ -1,6 +1,7 @@
 import { type NumberArray } from 'cheminfo-types';
 import { Matrix, MatrixTransposeView, solve } from 'ml-matrix';
-import BaseRegression, {
+import {
+  BaseRegression,
   checkArrayLength,
   maybeToPrecision,
 } from 'ml-regression-base';
