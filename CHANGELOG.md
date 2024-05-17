@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/mljs/regression-polynomial/compare/v3.0.0...v3.0.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* update dependencies. Force release for removal of default in base-regression ([c3c00e3](https://github.com/mljs/regression-polynomial/commit/c3c00e3552f14d5e13b0aa419a1de0ea1a5ffc61))
+
 ## [3.0.0](https://github.com/mljs/regression-polynomial/compare/v2.2.0...v3.0.0) (2023-10-02)
 
 
