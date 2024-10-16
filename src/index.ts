@@ -18,10 +18,10 @@ export class PolynomialRegression extends BaseRegression {
    * @param y - dependent or response variable
    * @param degree - degree of the polynomial regression, or array of powers to be used. When degree is an array, intercept at zero is forced to false/ignored.
    * @example `new PolynomialRegression(x, y, 2)`, in this case, you can pass the option `interceptAtZero`, if you need it.
+   * @param options
    * @example `new PolynomialRegression(x, y, [1, 3, 5])`
    * Each of the degrees corresponds to a column, so if you have them switched, just do:
    * @example `new PolynomialRegression(x, y, [3, 1, 5])`
-   *
    * @param options.interceptAtZero - force the polynomial regression so that f(0) = 0
    */
   constructor(
@@ -129,6 +129,7 @@ export class PolynomialRegression extends BaseRegression {
  * @param y - dependent or response variable
  * @param degree - degree of the polynomial regression
  * @param options.interceptAtZero - force the polynomial regression so that $f(0) = 0$
+ * @param options
  */
 function regress(
   x: NumberArray,
