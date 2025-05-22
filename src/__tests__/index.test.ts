@@ -1,8 +1,7 @@
-import { NumberArray } from 'cheminfo-types';
 import { createRandomArray, xSum } from 'ml-spectra-processing';
 import { expect, it, describe } from 'vitest';
 
-import { PolynomialRegression } from '..';
+import { PolynomialRegression, type NumberArray } from '..';
 
 function assertCoefficientsAndPowers(
   result: PolynomialRegression,

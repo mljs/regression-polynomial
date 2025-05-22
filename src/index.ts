@@ -1,10 +1,21 @@
-import { type NumberArray } from 'cheminfo-types';
 import { Matrix, MatrixTransposeView, solve } from 'ml-matrix';
 import {
   BaseRegression,
   checkArrayLength,
   maybeToPrecision,
 } from 'ml-regression-base';
+
+export type NumberArray =
+  | number[]
+  | Int8Array
+  | Uint8Array
+  | Uint8ClampedArray
+  | Int16Array
+  | Uint16Array
+  | Int32Array
+  | Uint32Array
+  | Float32Array
+  | Float64Array;
 
 interface PolynomialRegressionOptions {
   interceptAtZero?: boolean;
