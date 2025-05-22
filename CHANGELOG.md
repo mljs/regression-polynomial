@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2](https://github.com/mljs/regression-polynomial/compare/v3.0.1...v3.0.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* remove dependency on cheminfo-types ([#15](https://github.com/mljs/regression-polynomial/issues/15)) ([eda138f](https://github.com/mljs/regression-polynomial/commit/eda138fca89fe40162304ec689f82a39a51346c7))
+
 ## [3.0.1](https://github.com/mljs/regression-polynomial/compare/v3.0.0...v3.0.1) (2024-05-16)
 
 
