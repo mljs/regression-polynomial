@@ -5,7 +5,17 @@ import {
   maybeToPrecision,
 } from 'ml-regression-base';
 
-import type { NumberArray } from 'cheminfo-types';
+export type NumberArray =
+  | number[]
+  | Int8Array
+  | Uint8Array
+  | Uint8ClampedArray
+  | Int16Array
+  | Uint16Array
+  | Int32Array
+  | Uint32Array
+  | Float32Array
+  | Float64Array;
 
 interface PolynomialRegressionOptions {
   interceptAtZero?: boolean;
