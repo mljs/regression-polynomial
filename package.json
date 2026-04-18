@@ -2,27 +2,26 @@
   "name": "ml-regression-polynomial",
   "version": "3.0.2",
   "description": "Polynomial Regression",
-  "types": "./lib/index.d.ts",
-  "main": "./lib/index.js",
-  "module": "./lib-esm/index.js",
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js"
+  },
   "files": [
-    "src",
     "lib",
-    "lib-esm"
+    "src"
   ],
   "scripts": {
     "check-types": "tsc --noEmit",
-    "clean": "rimraf lib lib-esm",
+    "clean": "rimraf lib",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "prepack": "npm run tsc",
     "prettier": "prettier --check src",
     "prettier-write": "prettier --write src",
-    "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
+    "test": "npm run test-only && npm run check-types && npm run eslint && npm run prettier",
     "test-only": "vitest run --coverage",
-    "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
-    "tsc-cjs": "tsc --project tsconfig.cjs.json",
-    "tsc-esm": "tsc --project tsconfig.esm.json"
+    "tsc": "npm run clean && npm run tsc-build",
+    "tsc-build": "tsc --project tsconfig.build.json"
   },
   "repository": {
     "type": "git",
@@ -35,18 +34,19 @@
     "url": "https://github.com/mljs/regression-polynomial/issues"
   },
   "homepage": "https://github.com/mljs/regression-polynomial#readme",
-  "devDependencies": {
-    "@vitest/coverage-v8": "^2.1.3",
-    "eslint": "^9.12.0",
-    "eslint-config-cheminfo-typescript": "^16.0.0",
-    "ml-spectra-processing": "^14.6.0",
-    "prettier": "^3.3.3",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.6.3",
-    "vitest": "^2.1.3"
-  },
   "dependencies": {
-    "ml-matrix": "^6.12.0",
-    "ml-regression-base": "^4.0.0"
+    "ml-matrix": "^6.12.2",
+    "ml-regression-base": "^4.0.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.4",
+    "@zakodium/tsconfig": "^1.0.2",
+    "eslint": "^9.39.2",
+    "eslint-config-cheminfo-typescript": "^22.0.0",
+    "ml-spectra-processing": "^14.28.1",
+    "prettier": "^3.8.3",
+    "rimraf": "^6.1.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.4"
   }
 }
