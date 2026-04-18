@@ -17,23 +17,29 @@ export type NumberArray =
   | Float32Array
   | Float64Array;
 
-interface PolynomialRegressionOptions {
+export interface PolynomialRegressionOptions {
+  /**
+   * Force the polynomial regression so that `f(0) = 0`.
+   * Ignored when `degree` is passed as an array of powers.
+   * @default false
+   */
   interceptAtZero?: boolean;
 }
+
 export class PolynomialRegression extends BaseRegression {
   degree: number;
   powers: number[];
   coefficients: number[];
   /**
+   * Build a polynomial regression model from the given data set.
    * @param x - independent or explanatory variable
    * @param y - dependent or response variable
    * @param degree - degree of the polynomial regression, or array of powers to be used. When degree is an array, intercept at zero is forced to false/ignored.
+   * @param options - regression options
    * @example `new PolynomialRegression(x, y, 2)`, in this case, you can pass the option `interceptAtZero`, if you need it.
-   * @param options
    * @example `new PolynomialRegression(x, y, [1, 3, 5])`
    * Each of the degrees corresponds to a column, so if you have them switched, just do:
    * @example `new PolynomialRegression(x, y, [3, 1, 5])`
-   * @param options.interceptAtZero - force the polynomial regression so that f(0) = 0
    */
   constructor(
     x: NumberArray,
@@ -59,10 +65,13 @@ export class PolynomialRegression extends BaseRegression {
     }
   }
 
-  _predict(x: number) {
+  override _predict(x: number) {
+    const { coefficients, powers } = this;
     let y = 0;
-    for (let k = 0; k < this.powers.length; k++) {
-      y += this.coefficients[k] * x ** this.powers[k];
+    for (let k = 0; k < powers.length; k++) {
+      const coefficient = coefficients[k] ?? 0;
+      const power = powers[k] ?? 0;
+      y += coefficient * x ** power;
     }
     return y;
   }
@@ -76,11 +85,11 @@ export class PolynomialRegression extends BaseRegression {
     };
   }
 
-  toString(precision: number) {
+  override toString(precision: number) {
     return this._toFormula(precision, false);
   }
 
-  toLaTeX(precision: number) {
+  override toLaTeX(precision: number) {
     return this._toFormula(precision, true);
   }
 
@@ -98,18 +107,20 @@ export class PolynomialRegression extends BaseRegression {
     let str = '';
     for (let k = 0; k < this.coefficients.length; k++) {
       str = '';
-      if (this.coefficients[k] !== 0) {
-        if (this.powers[k] === 0) {
-          str = maybeToPrecision(this.coefficients[k], precision);
-        } else if (this.powers[k] === 1) {
-          str = `${maybeToPrecision(this.coefficients[k], precision) + times}x`;
+      const coefficient = this.coefficients[k] ?? 0;
+      const power = this.powers[k] ?? 0;
+      if (coefficient !== 0) {
+        if (power === 0) {
+          str = maybeToPrecision(coefficient, precision);
+        } else if (power === 1) {
+          str = `${maybeToPrecision(coefficient, precision) + times}x`;
         } else {
           str = `${
-            maybeToPrecision(this.coefficients[k], precision) + times
-          }x${sup}${this.powers[k]}${closeSup}`;
+            maybeToPrecision(coefficient, precision) + times
+          }x${sup}${power}${closeSup}`;
         }
 
-        if (this.coefficients[k] > 0 && k !== this.coefficients.length - 1) {
+        if (coefficient > 0 && k !== this.coefficients.length - 1) {
           str = ` + ${str}`;
         } else if (k !== this.coefficients.length - 1) {
           str = ` ${str}`;
@@ -139,8 +150,8 @@ export class PolynomialRegression extends BaseRegression {
  * @param x - independent or explanatory variable
  * @param y - dependent or response variable
  * @param degree - degree of the polynomial regression
- * @param options.interceptAtZero - force the polynomial regression so that $f(0) = 0$
- * @param options
+ * @param options - regression options
+ * @returns degree, powers and coefficients of the fitted polynomial
  */
 function regress(
   x: NumberArray,
@@ -153,7 +164,7 @@ function regress(
   let powers: number[] = [];
   if (Array.isArray(degree)) {
     powers = degree;
-    interceptAtZero = false; //must be false in this case
+    interceptAtZero = false;
   } else if (typeof degree === 'number') {
     if (interceptAtZero) {
       powers = new Array(degree);
@@ -167,15 +178,16 @@ function regress(
       }
     }
   }
-  const nCoefficients = powers.length; //1 per power, in any case.
+  const nCoefficients = powers.length;
   const F = new Matrix(n, nCoefficients);
-  const Y = new Matrix([y]);
+  const Y = new Matrix([Array.from(y)]);
   for (let k = 0; k < nCoefficients; k++) {
+    const power = powers[k] ?? 0;
     for (let i = 0; i < n; i++) {
-      if (powers[k] === 0) {
+      if (power === 0) {
         F.set(i, k, 1);
       } else {
-        F.set(i, k, x[i] ** powers[k]);
+        F.set(i, k, (x[i] ?? 0) ** power);
       }
     }
   }
