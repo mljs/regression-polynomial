@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/mljs/regression-polynomial/compare/v3.0.2...v4.0.0) (2026-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* package is now ESM-only; consumers using require() must migrate to import (or use Node.js >= 20.19).
+
+### Features
+
+* migrate to ESM-only with shared tsconfig ([#17](https://github.com/mljs/regression-polynomial/issues/17)) ([f48da90](https://github.com/mljs/regression-polynomial/commit/f48da9094b1207d2e45150cb6e7dd9e368272904))
+
 ## [3.0.2](https://github.com/mljs/regression-polynomial/compare/v3.0.1...v3.0.2) (2025-05-22)
 
 
