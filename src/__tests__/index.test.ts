@@ -127,6 +127,20 @@ test('Fit a parabola with origin on 0, using degree array', () => {
   assertCoefficientsAndPowers(result, solution, [1, 2]);
 });
 
+test.each([Int32Array, Float64Array])('typed powers: %s', (ArrayType) => {
+  const result = new PolynomialRegression(
+    [-2, -1, 0, 1, 2],
+    [9, 2, 1, 6, 17],
+    new ArrayType([2, 0, 1]),
+    { interceptAtZero: true },
+  );
+
+  assertCoefficientsAndPowers(result, [3, 1, 2], [2, 0, 1]);
+
+  expect(result.predict(3)).toBeCloseTo(34);
+  expect(PolynomialRegression.load(result.toJSON()).predict(3)).toBeCloseTo(34);
+});
+
 test('We should get the same result using numeric degree', () => {
   const x = new Float64Array([-4, 4, 2, 3, 1, 8, 5, 7]);
   // the .5 is to prove that we can force the origin on 0.
