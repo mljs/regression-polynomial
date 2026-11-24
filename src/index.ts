@@ -162,8 +162,8 @@ function regress(
   const n = x.length;
   let { interceptAtZero = false } = options;
   let powers: number[] = [];
-  if (Array.isArray(degree)) {
-    powers = degree;
+  if (Array.isArray(degree) || ArrayBuffer.isView(degree)) {
+    powers = Array.isArray(degree) ? degree : Array.from(degree);
     interceptAtZero = false;
   } else if (typeof degree === 'number') {
     if (interceptAtZero) {
